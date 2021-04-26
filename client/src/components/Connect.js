@@ -10,6 +10,7 @@ import explore5 from './images/explore5.jpg';
 class Connect extends Component {
   state = {
     contractsSent: '',
+    contractsReceived: '',
     contracts: []
 };
 
@@ -30,28 +31,49 @@ getUser = () => {
 }
 
 displayUsers = (contracts) => {
-    if (contracts) {
-        if (!contracts.length) {
-            // alert('fail');
-            return null;
-        }
+  if (contracts) {
+      if (!contracts.length) {
+          // alert('fail');
+          return null;
+      }
+      return contracts.map((items, index) => (
+          <div class = "section">
+       
+       {items.contractsSent.map((item, index) => {
+      return (
+        <div>
+          {item.map((subItems, sIndex) => {
+            return <div> {subItems}</div>;
+          })}
+        </div>
+      );
+    })}
+       </div>
+       ));
+ } 
+};
 
-        return contracts.map((items, index) => (
-            <div id = "list" class = "section">
-         
-         {items.contractsSent.map((item, index) => {
-        return (
-          <div class = "contract">
-            {item.map((subItems, sIndex) => {
-              return <p> {subItems} </p>;
-            })}
-          </div>
-        );
-      })}
-        
-         </div>
-         ));
-   } 
+displayReceived = (contracts) => {
+  if (contracts) {
+      if (!contracts.length) {
+          // alert('fail');
+          return null;
+      }
+      return contracts.map((items, index) => (
+          <div class = "section">
+       
+       {items.contractsReceived.map((item, index) => {
+      return (
+        <div>
+          {item.map((subItems, sIndex) => {
+            return <div> {subItems}</div>;
+          })}
+        </div>
+      );
+    })}
+       </div>
+       ));
+ } 
 };
 
   render() {
@@ -81,11 +103,18 @@ displayUsers = (contracts) => {
 
     </div>
     <div class = "pendingContracts">
-    <div class = "timelineText">Current Active Contracts</div><br></br>
+    <div class = "timelineText">Current Sent Contracts</div><br></br>
 
       {this.displayUsers(this.state.contracts)}
-
     </div>
+
+    <div class = "pendingContracts">
+    <div class = "timelineText">Current Received Contracts</div><br></br>
+
+      {this.displayReceived(this.state.contracts)}
+    </div>
+
+    
     <div class="connectioncolumn">
     <NavLink exact activeClassName="current" to='/contract'>
     <button class="button button2">

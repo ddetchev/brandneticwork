@@ -7,6 +7,9 @@ import {
   USER_LOADING
 } from "./types";
 // Register User
+var MongoClient = require('mongodb').MongoClient;
+// Configuring the database
+const dbConfig = "mongodb+srv://ddetchev:nocteferis01@cluster0.y5ilg.mongodb.net/myFirstDatabase";
 export const registerUser = (userData, history) => dispatch => {
   axios
     .post("/api/users/register", userData)
@@ -69,6 +72,7 @@ export const setUserLoading = () => {
 };
 // Log user out
 export const logoutUser = () => dispatch => {
+  
   // Remove token from local storage
   localStorage.removeItem("jwtToken");
   // Remove auth header for future requests

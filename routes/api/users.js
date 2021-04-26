@@ -73,6 +73,7 @@ router.post("/login", (req, res) => {
       //alert('test');
       if (err) throw err;
       var dbo = db.db("myFirstDatabase");
+      dbo.collection("users").findOneAndUpdate({loggedIn: "logged"}, {$set: {loggedIn: "notlogged"}})
       dbo.collection("users").findOneAndUpdate({email: email}, {$set: {loggedIn: "logged"}});
   });
   // Check password
@@ -114,10 +115,20 @@ router.post("/login", (req, res) => {
       if (err) throw err;
       var dbo = db.db("myFirstDatabase");
       dbo.collection("users").findOneAndUpdate({email: req.body.email}, {$push: {contractsSent: [req.body.desc, req.body.recipient, req.body.amount]}});
+      dbo.collection("users").findOneAndUpdate({publicKey: req.body.recipient}, {$push: {contractsReceived: [req.body.desc, req.body.recipient, req.body.amount]}});
           
   });
-
   })
+
+  router.post("/dologout", (req, res) => {
+    MongoClient.connect(dbConfig.mongoURI, function(err, db) {
+      //alert('test');
+      if (err) throw err;
+      var dbo = db.db("myFirstDatabase");
+      dbo.collection("users").findOneAndUpdate({email: req.user.email}, {$set: {loggedIn: "notlogged"}});
+          
+  });
+})
 
   router.get("/showcontracts", (req, res) => {
     //alert('testttt');
