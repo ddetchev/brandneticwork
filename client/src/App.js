@@ -73,11 +73,7 @@ class App extends Component {
             <PrivateRoute exact path = "/Exploresustainablebusiness" component = {Exploresustainablebusiness} />
             <PrivateRoute exact path = "/Exploretravel" component = {Exploretravel} />
             <PrivateRoute exact path = "/Explorefitness" component = {Explorefitness} />
-            <PrivateRoute exact path = "/contract" component = {Contract} />
-
-
-
-              
+            <PrivateRoute exact path = "/contract" component = {Contract} />              
             </Switch>
           </div>
         </Router>
