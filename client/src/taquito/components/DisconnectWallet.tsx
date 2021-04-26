@@ -22,7 +22,6 @@ const DisconnectButton = ({
   setBeaconConnection
 }: ButtonProps): JSX.Element => {
   const disconnectWallet = async (): Promise<void> => {
-    //window.localStorage.clear();
     setUserAddress("");
     setUserBalance(0);
     setWallet(null);

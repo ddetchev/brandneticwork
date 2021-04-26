@@ -25,7 +25,6 @@ const Taquito = () => {
   const [storage, setStorage] = useState<number>(0);
   const [copiedPublicToken, setCopiedPublicToken] = useState<boolean>(false);
   const [beaconConnection, setBeaconConnection] = useState<boolean>(false);
-  const [activeTab, setActiveTab] = useState<string>("transfer");
 
   const contractAddress: string = "KT1XCAdyQsHuNTkeLJes7R3krmGhtsmoBvNz";
 
