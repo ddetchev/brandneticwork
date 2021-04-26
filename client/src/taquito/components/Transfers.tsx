@@ -1,10 +1,5 @@
 import React, { useState, Dispatch, SetStateAction } from "react";
 import { TezosToolkit } from "@taquito/taquito";
-import { updateContracts } from "../../actions/authActions";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import { registerUser } from "../../actions/authActions";
-import classnames from "classnames";
 
 const Transfers = ({
   Tezos,

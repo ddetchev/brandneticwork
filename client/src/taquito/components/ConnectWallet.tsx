@@ -38,10 +38,8 @@ const ConnectButton = ({
 
   const setup = async (userAddress: string): Promise<void> => {
     setUserAddress(userAddress);
-    // updates balance
     const balance = await Tezos.tz.getBalance(userAddress);
     setUserBalance(balance.toNumber());
-    // creates contract instance
     const contract = await Tezos.wallet.at(contractAddress);
     const storage: any = await contract.storage();
     setContract(contract);
@@ -56,7 +54,6 @@ const ConnectButton = ({
           rpcUrl: "https://api.tez.ie/rpc/edonet"
         }
       });
-      // gets user's address
       const userAddress = await wallet.getPKH();
       await setup(userAddress);
       setBeaconConnection(true);
@@ -73,7 +70,6 @@ const ConnectButton = ({
 
       Tezos.setSignerProvider(ledgerSigner);
 
-      //Get the public key and the public key hash from the Ledger
       const userAddress = await Tezos.signer.publicKeyHash();
       await setup(userAddress);
     } catch (error) {
@@ -84,13 +80,11 @@ const ConnectButton = ({
 
   useEffect(() => {
     (async () => {
-      // creates a wallet instance
       const wallet = new BeaconWallet({
         name: "BRANDNETIC",
         preferredNetwork: NetworkType.EDONET,
-        disableDefaultEvents: true, // Disable all events / UI. This also disables the pairing alert.
+        disableDefaultEvents: true, 
         eventHandlers: {
-          // To keep the pairing alert, we have to add the following default event handlers back
           [BeaconEvent.PAIR_INIT]: {
             handler: defaultEventCallbacks.PAIR_INIT
           },
@@ -101,7 +95,6 @@ const ConnectButton = ({
       });
       Tezos.setWalletProvider(wallet);
       setWallet(wallet);
-      // checks if wallet was connected before
       const activeAccount = await wallet.client.getActiveAccount();
       if (activeAccount) {
         const userAddress = await wallet.getPKH();
