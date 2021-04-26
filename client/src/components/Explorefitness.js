@@ -52,6 +52,7 @@ class Explorefitness extends Component {
                 <div id = "list" class = "section">
              <div class="item3"><NavLink exact activeClassName="current" to='/contract'>
              <img src={post.profilePicture} style={{borderRadius: "16px"}} width="100%" height="100%"></img></NavLink></div>
+             <button variant = "primary" onClick={() => {navigator.clipboard.writeText(post.publicKey)}}>Copy key to clipboard</button>
              </div>
              ));
        } 
