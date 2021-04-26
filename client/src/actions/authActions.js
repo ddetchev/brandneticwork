@@ -18,6 +18,19 @@ export const registerUser = (userData, history) => dispatch => {
       })
     );
 };
+
+export const updateContracts = (contractData, history) => dispatch => {
+  axios
+    .post("/api/users/updateSent", contractData)
+    .then(res => history.push("/dashboard")) 
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};
+
 // Login - get user token
 export const loginUser = userData => dispatch => {
   axios

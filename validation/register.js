@@ -9,6 +9,8 @@ module.exports = function validateRegisterInput(data) {
   data.password2 = !isEmpty(data.password2) ? data.password2 : "";
   data.tags = !isEmpty(data.tags) ? data.tags : "";
   data.profilePicture = !isEmpty(data.profilePicture) ? data.profilePicture : "";
+  data.publicKey = !isEmpty(data.publicKey) ? data.publicKey : "";
+
 // Name checks
   if (Validator.isEmpty(data.name)) {
     errors.name = "Name field is required";
@@ -36,7 +38,10 @@ if (!Validator.equals(data.password, data.password2)) {
     errors.tags = "Tags field is required";
   }
   if (Validator.isEmpty(data.profilePicture)) {
-    errors.tags = "Profile picture field is required";
+    errors.profilePicture = "Profile picture field is required";
+  }
+  if (Validator.isEmpty(data.publicKey)) {
+    errors.publicKey = "Public key is required";
   }
 return {
     errors,

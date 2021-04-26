@@ -25,6 +25,7 @@ import Exploresustainablebusiness from "./components/Exploresustainablebusiness"
 import Exploretravel from "./components/Exploretravel";
 import Explorefitness from "./components/Explorefitness";
 import Contract from "./components/contract";
+import SecondContract from "./taquito/components/secondcontract";
 
 
 
@@ -74,6 +75,7 @@ class App extends Component {
             <PrivateRoute exact path = "/Exploretravel" component = {Exploretravel} />
             <PrivateRoute exact path = "/Explorefitness" component = {Explorefitness} />
             <PrivateRoute exact path = "/contract" component = {Contract} />              
+            <PrivateRoute exact path = "/secondcontract" component = {SecondContract} />              
             </Switch>
           </div>
         </Router>

@@ -7,8 +7,56 @@ import explore1 from './images/explore1.jpg';
 import explore5 from './images/explore5.jpg';
 
 
-function Connect() {
-    return <div>
+class Connect extends Component {
+  state = {
+    contractsSent: '',
+    contracts: []
+};
+
+componentDidMount = () => {
+    this.getUser();
+};
+
+getUser = () => {
+    fetch('/api/users/showcontracts')
+    .then(response => response.json())
+    .then((response) => {
+        console.log(response);
+        this.setState({
+            contracts: response
+        })
+    });
+    
+}
+
+displayUsers = (contracts) => {
+    if (contracts) {
+        if (!contracts.length) {
+            // alert('fail');
+            return null;
+        }
+
+        return contracts.map((items, index) => (
+            <div id = "list" class = "section">
+         
+         {items.contractsSent.map((item, index) => {
+        return (
+          <div class = "contract">
+            {item.map((subItems, sIndex) => {
+              return <p> {subItems} </p>;
+            })}
+          </div>
+        );
+      })}
+        
+         </div>
+         ));
+   } 
+};
+
+  render() {
+    return (
+    <div>
     <div class = "connectleft" style = {{marginRight: 43 + 'em'}}>Timeline</div>
     <div class = "connectright">Connections</div>
     
@@ -34,45 +82,9 @@ function Connect() {
     </div>
     <div class = "pendingContracts">
     <div class = "timelineText">Current Active Contracts</div><br></br>
-      <div class="contract">
-        Contract
-        <div class ="contractinner">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-        dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-        ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-        fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-        mollit anim id est laborum
-        <br></br><p></p>
-        Amount: $xxx
-        </div>
-        <button class="button button3">Finish</button>
-      </div>
-      <div class="contract">
-        Contract
-        <div class ="contractinner">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-        dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-        ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-        fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-        mollit anim id est laborum
-        <br></br><p></p>
-        Amount: $xxx
-        </div>
-        <button class="button button3">Finish</button>
-      </div>
-      <div class="contract">
-        Contract
-        <div class ="contractinner">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-        dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-        ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-        fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-        mollit anim id est laborum
-        <br></br><p></p>
-        Amount: $xxx
-        </div>
-        <button class="button button3">Finish</button>
-      </div>
+
+      {this.displayUsers(this.state.contracts)}
+
     </div>
     <div class="connectioncolumn">
     <NavLink exact activeClassName="current" to='/contract'>
@@ -126,6 +138,8 @@ function Connect() {
     </div>
 
   </div>
+  );
+}
 }
 
 export default Connect;

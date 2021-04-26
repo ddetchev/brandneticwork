@@ -25,6 +25,22 @@ const UserSchema = new Schema({
   profilePicture: {
     type: String,
     required: true
+  },
+  publicKey: {
+    type: String,
+    required: true
+  },
+  loggedIn: {
+    type: String,
+    required: true
+  },
+  contractsSent: {
+    type: Array,
+    required: true
+  },
+  contractsReceived: {
+    type: Array,
+    required: true
   }
 });
 module.exports = User = mongoose.model("users", UserSchema);

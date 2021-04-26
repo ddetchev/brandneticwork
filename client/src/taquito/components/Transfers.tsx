@@ -1,5 +1,10 @@
 import React, { useState, Dispatch, SetStateAction } from "react";
 import { TezosToolkit } from "@taquito/taquito";
+import { updateContracts } from "../../actions/authActions";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { registerUser } from "../../actions/authActions";
+import classnames from "classnames";
 
 const Transfers = ({
   Tezos,
@@ -12,6 +17,8 @@ const Transfers = ({
 }): JSX.Element => {
   const [recipient, setRecipient] = useState<string>("");
   const [amount, setAmount] = useState<string>("");
+  const [desc, setDesc] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
 
   const sendTransfer = async (): Promise<void> => {
@@ -24,20 +31,40 @@ const Transfers = ({
         await op.confirmation();
         setRecipient("");
         setAmount("");
+        setDesc("");
+        setEmail("");
         const balance = await Tezos.tz.getBalance(userAddress);
         setUserBalance(balance.toNumber());
+        const newContract = {
+          email: email,
+          recipient: recipient,
+          amount: amount,
+          desc: desc
+        };
+        
+      
+        
       } catch (error) {
         console.log(error);
       } finally {
         setLoading(false);
-      }
+        window.location.href = "/secondcontract";
+      } 
     }
   };
 
   return (
     <div id="transfer-inputs">
       <input type="text"
-        placeholder="Enter brief description"/>
+        placeholder="Enter your email"
+        value={email}
+        onChange={e => setEmail(e.target.value)}
+        />
+      <input type="text"
+        placeholder="Enter brief description"
+        value={desc}
+        onChange={e => setDesc(e.target.value)}
+        />
       <input
         type="text"
         placeholder="Recipient"

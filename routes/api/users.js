@@ -30,7 +30,11 @@ router.post("/register", (req, res) => {
           email: req.body.email,
           password: req.body.password,
           tags: req.body.tags,
-          profilePicture: req.body.profilePicture
+          profilePicture: req.body.profilePicture,
+          publicKey: req.body.publicKey,
+          loggedIn: req.body.loggedIn,
+          contractsSent: req.body.contractsSent,
+          contractsReceived: req.body.contractsReceived
         });
   // Hash password before saving in database
         bcrypt.genSalt(10, (err, salt) => {
@@ -65,6 +69,12 @@ router.post("/login", (req, res) => {
       if (!user) {
         return res.status(404).json({ emailnotfound: "Email not found" });
       }
+    MongoClient.connect(dbConfig.mongoURI, function(err, db) {
+      //alert('test');
+      if (err) throw err;
+      var dbo = db.db("myFirstDatabase");
+      dbo.collection("users").findOneAndUpdate({email: email}, {$set: {loggedIn: "logged"}});
+  });
   // Check password
       bcrypt.compare(password, user.password).then(isMatch => {
         if (isMatch) {
@@ -97,6 +107,31 @@ router.post("/login", (req, res) => {
     });
   });
 
+
+  router.post("/updateSent", (req, res) => {
+    MongoClient.connect(dbConfig.mongoURI, function(err, db) {
+      //alert('test');
+      if (err) throw err;
+      var dbo = db.db("myFirstDatabase");
+      dbo.collection("users").findOneAndUpdate({email: req.body.email}, {$push: {contractsSent: [req.body.desc, req.body.recipient, req.body.amount]}});
+          
+  });
+
+  })
+
+  router.get("/showcontracts", (req, res) => {
+    //alert('testttt');
+    MongoClient.connect(dbConfig.mongoURI, function(err, db) {
+        //alert('test');
+        if (err) throw err;
+        var dbo = db.db("myFirstDatabase");
+        dbo.collection("users").find({loggedIn: "logged"}).toArray(function(err, result) {
+            if (err) throw err;
+            res.send(result);
+            db.close();
+        });
+    });
+})
 
   router.get("/showreality", (req, res) => {
     //alert('testttt');

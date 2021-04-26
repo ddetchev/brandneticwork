@@ -14,6 +14,10 @@ class Register extends Component {
       password2: "",
       tags: "",
       profilePicture: "",
+      publicKey: "",
+      loggedIn: "notlogged",
+      contractsSent: [],
+      contractsReceived: [],
       errors: {}
     };
   }
@@ -43,7 +47,11 @@ const newUser = {
       password: this.state.password,
       password2: this.state.password2,
       tags: this.state.tags,
-      profilePicture: this.state.profilePicture
+      profilePicture: this.state.profilePicture,
+      publicKey: this.state.publicKey,
+      loggedIn: this.state.loggedIn,
+      contractsSent: this.state.contractsSent,
+      contractsReceived: this.state.contractsReceived
     };
 this.props.registerUser(newUser, this.props.history); 
   };
@@ -136,6 +144,21 @@ return (
                 />
                 <label htmlFor="profilePicture">Profile Picture URL</label>
                 <span className="red-text">{errors.profilePicture}</span>
+              </div>
+
+              <div className="input-field col s12">
+                <input
+                  onChange={this.onChange}
+                  value={this.state.publicKey}
+                  error={errors.publicKey}
+                  id="publicKey"
+                  type="Text"
+                  className={classnames("", {
+                    invalid: errors.publicKey
+                  })}
+                />
+                <label htmlFor="publicKey">Enter your Tezos wallet public key</label>
+                <span className="red-text">{errors.publicKey}</span>
               </div>
               
               <label for="tags">Choose a tag:</label>
